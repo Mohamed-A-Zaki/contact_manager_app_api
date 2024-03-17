@@ -2,7 +2,13 @@ import mongoose from "mongoose";
 
 const { model, Schema } = mongoose;
 
-const contactSchema = new Schema(
+interface IContact {
+  name: string;
+  email: string;
+  phone: string;
+}
+
+const contactSchema = new Schema<IContact>(
   {
     name: {
       type: String,
@@ -11,12 +17,9 @@ const contactSchema = new Schema(
     email: {
       type: String,
       required: true,
+      unique: true,
     },
     phone: {
-      type: String,
-      required: true,
-    },
-    message: {
       type: String,
       required: true,
     },
@@ -26,6 +29,6 @@ const contactSchema = new Schema(
   }
 );
 
-const Contact = model("Contact", contactSchema);
+const Contact = model<IContact>("Contact", contactSchema);
 
 export default Contact;

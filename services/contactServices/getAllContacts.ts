@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
 import expressAsyncHandler from "express-async-handler";
+import Contact from "../../models/contactModel";
 
 const getAllContacts = expressAsyncHandler(
   async (req: Request, res: Response) => {
-    res.json({
-      message: "get all contacts",
-    });
+    const contacts = await Contact.find({});
+    res.json(contacts);
   }
 );
 
