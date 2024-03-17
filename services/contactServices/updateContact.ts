@@ -42,18 +42,27 @@ const updateContact = expressAsyncHandler(
       throw new Error("Invalid contact id");
     }
 
+    const contact = await Contact.findById(id);
+
     /***
      * check if contact exists
      */
-    if (!(await Contact.findById(id))) {
+    if (!contact) {
       throw new Error("Contact not found");
     }
 
-    const contact = await Contact.findByIdAndUpdate(id, req.body, {
+    /***
+     * check if contact belongs to user
+     */
+    if (contact.user_id !== res.locals.user_id) {
+      throw new Error("Contact not found");
+    }
+
+    const _contact = await Contact.findByIdAndUpdate(id, req.body, {
       new: true,
     });
 
-    res.json(contact);
+    res.json(_contact);
   }
 );
 

@@ -17,6 +17,13 @@ const getOneContact = expressAsyncHandler(
     const contact = await Contact.findById(id);
 
     /**
+     * check if contact belongs to user
+     */
+    if (contact?.user_id !== res.locals.user_id) {
+      throw new Error("Contact not found");
+    }
+
+    /**
      * check if contact exists
      */
     if (!contact) {

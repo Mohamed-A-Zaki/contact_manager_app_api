@@ -33,14 +33,10 @@ const createContact = expressAsyncHandler(
       throw new Error("Invalid phone number");
     }
 
-    /***
-     * Check if email already exists
-     */
-    if (await Contact.findOne({ email })) {
-      throw new Error("Email already exists");
-    }
-
-    const contact = await Contact.create(req.body);
+    const contact = await Contact.create({
+      user_id: res.locals.user_id,
+      ...req.body,
+    });
 
     res.json(contact);
   }

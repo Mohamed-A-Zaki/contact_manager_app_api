@@ -14,10 +14,19 @@ const deleteContact = expressAsyncHandler(
       throw new Error("Invalid contact id");
     }
 
+    const contact = await Contact.findById(id);
+
     /***
      * check if contact exists
      */
-    if (!(await Contact.findById(id))) {
+    if (!contact) {
+      throw new Error("Contact not found");
+    }
+
+    /***
+     * check if contact belongs to user
+     */
+    if (contact.user_id !== res.locals.user_id) {
       throw new Error("Contact not found");
     }
 

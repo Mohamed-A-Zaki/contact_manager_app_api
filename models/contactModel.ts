@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 const { model, Schema } = mongoose;
 
 interface IContact {
+  user_id: mongoose.Schema.Types.ObjectId;
   name: string;
   email: string;
   phone: string;
@@ -10,6 +11,11 @@ interface IContact {
 
 const contactSchema = new Schema<IContact>(
   {
+    user_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      // ref: "User",
+    },
     name: {
       type: String,
       required: true,
@@ -17,7 +23,6 @@ const contactSchema = new Schema<IContact>(
     email: {
       type: String,
       required: true,
-      unique: true,
     },
     phone: {
       type: String,

@@ -5,8 +5,11 @@ import createContact from "../services/contactServices/createContact";
 import getOneContact from "../services/contactServices/getOneContact";
 import deleteContact from "../services/contactServices/deleteContact";
 import updateContact from "../services/contactServices/updateContact";
+import requireAuth from "../middlewares/requireAuth";
 
 const contact_router = express.Router();
+
+contact_router.use(requireAuth);
 
 contact_router.route("/").get(getAllContacts).post(createContact);
 

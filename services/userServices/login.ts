@@ -44,9 +44,6 @@ const login = expressAsyncHandler(async (req: Request, res: Response) => {
   }
 
   res.json({
-    _id: user._id,
-    name: user.name,
-    email: user.email,
     token: generateToken(user._id.toString()),
   });
 });
